@@ -1,0 +1,37 @@
+[
+  {
+    "source_url": "https://example.gov.vn/vbpl/luat-giao-dich-dien-tu-99-2024-qh15",
+    "raw_file": "luat_giao_dich_dien_tu_2024.txt",
+    "expected_type": "Luật"
+  },
+  {
+    "source_url": "https://example.gov.vn/vbpl/nghi-dinh-102-2024-nd-cp",
+    "raw_file": "nghi_dinh_102_2024.txt",
+    "expected_type": "Nghị định"
+  },
+  {
+    "source_url": "https://example.gov.vn/vbpl/thong-tu-01-2025-tt-btttt",
+    "raw_file": "thong_tu_01_2025.txt",
+    "expected_type": "Thông tư"
+  },
+  {
+    "source_url": "https://example.gov.vn/vbpl/luat-giao-dich-dien-tu-99-2024-qh15",
+    "raw_file": "duplicate_luat_giao_dich_dien_tu_2024.txt",
+    "expected_type": "Luật"
+  },
+  {
+    "source_url": "https://example.gov.vn/vbpl/luat-sua-doi-15-2025-qh15",
+    "raw_file": "luat_sua_doi_2025.txt",
+    "expected_type": "Luật"
+  },
+  {
+    "source_url": "https://example.gov.vn/vbpl/nghi-dinh-102-2024-nd-cp-hop-nhat",
+    "raw_file": "nghi_dinh_102_2024_ban_hop_nhat.txt",
+    "expected_type": "Nghị định"
+  },
+  {
+    "source_url": "https://example.gov.vn/vbpl/quyet-dinh-1234-qd-ttg",
+    "raw_file": "quyet_dinh_messy_2025.txt",
+    "expected_type": null
+  }
+]

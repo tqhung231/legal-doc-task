@@ -1,0 +1,62 @@
+CHÍNH PHỦ                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+---------                             Độc lập - Tự do - Hạnh phúc
+                                      ---------------------------
+
+Số: 102/2024/NĐ-CP                    Hà Nội, ngày 15 tháng 9 năm 2024
+
+
+NGHỊ ĐỊNH
+QUY ĐỊNH CHI TIẾT MỘT SỐ ĐIỀU CỦA LUẬT GIAO DỊCH ĐIỆN TỬ
+
+Căn cứ Luật Tổ chức Chính phủ ngày 19 tháng 6 năm 2015;
+Căn cứ Luật Giao dịch điện tử số 99/2024/QH15 ngày 18 tháng 6 năm 2024;
+Theo đề nghị của Bộ trưởng Bộ Thông tin và Truyền thông;
+Chính phủ ban hành Nghị định quy định chi tiết một số điều của Luật Giao dịch
+điện tử.
+
+
+Chương I
+QUY ĐỊNH CHUNG
+
+Điều 1. Phạm vi điều chỉnh
+Nghị định này quy định chi tiết và hướng dẫn thi hành một số điều của Luật Giao
+dịch điện tử số 99/2024/QH15 về chữ ký điện tử và dịch vụ tin cậy.
+
+Điều 2. Đối tượng áp dụng
+Nghị định này áp dụng đối với cơ quan, tổ chức, cá nhân tham gia hoặc có liên
+quan đến hoạt động cung cấp, sử dụng dịch vụ tin cậy.
+
+
+Chương II
+CHỮ KÝ ĐIỆN TỬ
+
+Điều 3. Phân loại chữ ký điện tử
+1. Chữ ký điện tử được phân loại theo phạm vi sử dụng, bao gồm:
+a) Chữ ký điện tử chuyên dùng;
+b) Chữ ký số công cộng;
+c) Chữ ký số chuyên dùng công vụ.
+2. Bộ Thông tin và Truyền thông hướng dẫn chi tiết việc phân loại quy định tại
+khoản 1 Điều này.
+
+Điều 4. Điều kiện bảo đảm an toàn cho chữ ký điện tử
+1. Dữ liệu tạo chữ ký điện tử chỉ gắn duy nhất với người ký trong bối cảnh dữ
+liệu đó được sử dụng.
+2. Mọi thay đổi đối với thông điệp dữ liệu sau thời điểm ký đều có thể bị phát
+hiện.
+
+
+Chương III
+ĐIỀU KHOẢN THI HÀNH
+
+Điều 5. Hiệu lực thi hành
+Nghị định này có hiệu lực thi hành từ ngày 01 tháng 11 năm 2024.
+
+Điều 6. Trách nhiệm thi hành
+Các Bộ trưởng, Thủ trưởng cơ quan ngang bộ, Chủ tịch Ủy ban nhân dân các tỉnh,
+thành phố trực thuộc trung ương chịu trách nhiệm thi hành Nghị định này.
+
+
+                                      TM. CHÍNH PHỦ
+                                      THỦ TƯỚNG
+                                      (đã ký)
+                                      Phạm Văn B

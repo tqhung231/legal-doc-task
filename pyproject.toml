@@ -1,0 +1,12 @@
+[project]
+name = "legal-doc-task"
+version = "0.1.0"
+description = "Take-home: legal document intake pipeline + QA console"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    # Add the dependencies you choose. Suggestions (uncomment what you use):
+    # "streamlit",   # quick inspection UI
+    # "flask",       # alternative web UI
+    # SQLite ships with the Python standard library (no dependency needed).
+]

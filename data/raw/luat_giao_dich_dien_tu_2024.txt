@@ -1,0 +1,72 @@
+QUỐC HỘI                         CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+--------                              Độc lập - Tự do - Hạnh phúc
+                                      ---------------------------
+
+Luật số: 99/2024/QH15                 Hà Nội, ngày 18 tháng 6 năm 2024
+
+
+LUẬT
+GIAO DỊCH ĐIỆN TỬ
+
+Căn cứ Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam;
+Quốc hội ban hành Luật Giao dịch điện tử.
+
+
+Chương I
+QUY ĐỊNH CHUNG
+
+Điều 1. Phạm vi điều chỉnh
+Luật này quy định về giao dịch điện tử trong hoạt động của cơ quan nhà nước,
+tổ chức và cá nhân.
+
+Điều 2. Đối tượng áp dụng
+Luật này áp dụng đối với cơ quan, tổ chức, cá nhân trực tiếp tham gia giao dịch
+điện tử hoặc có liên quan đến giao dịch điện tử.
+
+Điều 3. Giải thích từ ngữ
+Trong Luật này, các từ ngữ dưới đây được hiểu như sau:
+1. Giao dịch điện tử là giao dịch được thực hiện bằng phương tiện điện tử.
+2. Thông điệp dữ liệu là thông tin được tạo ra, gửi đi, nhận và lưu trữ bằng
+phương tiện điện tử.
+3. Chữ ký điện tử là chữ ký được tạo lập dưới dạng dữ liệu điện tử gắn liền hoặc
+kết hợp một cách lô gíc với thông điệp dữ liệu.
+
+Điều 4. Nguyên tắc chung tiến hành giao dịch điện tử
+Việc tiến hành giao dịch điện tử phải tuân thủ các nguyên tắc sau đây:
+a) Tự nguyện lựa chọn sử dụng phương tiện điện tử để thực hiện giao dịch;
+b) Tự thỏa thuận về việc lựa chọn loại công nghệ để thực hiện giao dịch điện tử;
+c) Bảo đảm sự bình đẳng và an toàn trong giao dịch điện tử.
+
+
+Chương II
+THÔNG ĐIỆP DỮ LIỆU
+
+Mục 1
+GIÁ TRỊ PHÁP LÝ CỦA THÔNG ĐIỆP DỮ LIỆU
+
+Điều 5. Giá trị pháp lý của thông điệp dữ liệu
+1. Thông tin trong thông điệp dữ liệu không bị phủ nhận giá trị pháp lý chỉ vì
+thông tin đó được thể hiện dưới dạng thông điệp dữ liệu.
+2. Thông điệp dữ liệu có giá trị như văn bản khi thông tin trong thông điệp dữ
+liệu có thể truy cập và sử dụng được để tham chiếu.
+
+Điều 6. Gửi, nhận thông điệp dữ liệu
+1. Thời điểm gửi một thông điệp dữ liệu là thời điểm thông điệp dữ liệu đó rời
+khỏi hệ thống thông tin dưới sự kiểm soát của người khởi tạo.
+2. Thời điểm nhận một thông điệp dữ liệu là thời điểm thông điệp dữ liệu đó vào
+được hệ thống thông tin do người nhận chỉ định.
+
+
+Chương III
+ĐIỀU KHOẢN THI HÀNH
+
+Điều 7. Hiệu lực thi hành
+Luật này có hiệu lực thi hành từ ngày 01 tháng 7 năm 2025.
+
+Luật này được Quốc hội nước Cộng hòa xã hội chủ nghĩa Việt Nam khóa XV, kỳ họp
+thứ 7 thông qua ngày 18 tháng 6 năm 2024.
+
+
+                                      CHỦ TỊCH QUỐC HỘI
+                                      (đã ký)
+                                      Trần Văn A
