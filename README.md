@@ -126,4 +126,4 @@ python ingest.py data/feed.json
 
 Chúng tôi coi trọng **mô hình hóa dữ liệu sạch sẽ, pipeline tiếp nhận chạy lại được, và khả
 năng hiểu văn bản pháp luật** hơn là độ trau chuốt của UI. Hãy thể hiện tư duy của bạn qua
-schema, cách xử lý dữ liệu lộn xộn / thiếu, và README. Phạm vi bài làm khoảng **1–2 ngày**.
+schema, cách xử lý dữ liệu lộn xộn / thiếu, và README. Phạm vi bài làm trong **3 ngày**, deadline: 23h59 T4 24/06.
