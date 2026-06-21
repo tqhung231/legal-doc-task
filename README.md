@@ -1,5 +1,7 @@
 # Take-Home Task: Legal Document Intake Pipeline + QA Console
 
+*(Phiên bản tiếng Việt: [README.vi.md](README.vi.md))*
+
 ## Context
 
 Our product works with Vietnamese legal documents and uses them later for search / RAG.
