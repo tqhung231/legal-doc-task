@@ -1,132 +1,129 @@
-# Take-Home Task: Legal Document Intake Pipeline + QA Console
+# Bài test: Pipeline tiếp nhận văn bản pháp luật + Giao diện kiểm tra (QA Console)
 
-*(Phiên bản tiếng Việt: [README.vi.md](README.vi.md))*
+## Bối cảnh
 
-## Context
+Sản phẩm của chúng tôi làm việc với văn bản pháp luật Việt Nam và sử dụng chúng cho
+tìm kiếm / RAG. Trước khi văn bản đi vào pipeline RAG, cần một **hệ thống staging** để
+tiếp nhận văn bản mới hoặc văn bản có thay đổi, chuẩn hóa, trích xuất metadata, phát hiện
+trùng lặp / cập nhật, và cho phép người rà soát kiểm tra kết quả.
 
-Our product works with Vietnamese legal documents and uses them later for search / RAG.
-Before documents enter the RAG pipeline, we need a **staging system** that receives new or
-changed legal documents, normalizes them, extracts metadata, detects duplicates/updates, and
-lets a reviewer inspect the result.
+Repo này đã cung cấp sẵn mọi thứ để bạn bắt đầu: một bộ dữ liệu **mô phỏng (synthetic)**
+gồm các văn bản pháp luật (`data/`) và một khung dự án tối giản. Bạn xây dựng pipeline và
+giao diện kiểm tra trên nền tảng đó.
 
-This repo gives you everything you need to start: a small **synthetic** corpus of legal
-documents (`data/`) and a thin project skeleton. You build the pipeline and a simple
-inspection UI on top of it.
+> Bạn **không** cần xây crawler, embedding thật, hay một hệ thống RAG hoàn chỉnh. Bài test
+> tập trung vào mô hình hóa dữ liệu sạch sẽ, pipeline tiếp nhận có thể chạy lại, khả năng
+> hiểu văn bản pháp luật, và tính dễ kiểm tra (inspectability).
 
-> You do **not** need to build a crawler, real embeddings, or a full RAG system. This task is
-> about clean data modeling, a repeatable ingestion pipeline, legal-document understanding,
-> and inspectability.
+## Mục tiêu
 
-## Goal
+Xây dựng một ứng dụng nhỏ:
 
-Build a small app that:
+1. Tiếp nhận danh sách văn bản trong `data/feed.json`.
+2. Lưu vào cơ sở dữ liệu.
+3. Phân tích cấu trúc pháp lý (`Chương` / `Mục` / `Điều` / `Khoản` / `Điểm`).
+4. Phát hiện văn bản trùng lặp và phiên bản cập nhật.
+5. Cung cấp giao diện đơn giản để kiểm tra metadata và chất lượng văn bản đã trích xuất.
 
-1. Ingests the local feed of legal documents in `data/feed.json`.
-2. Stores them in a database.
-3. Parses their legal structure (`Chương` / `Mục` / `Điều` / `Khoản` / `Điểm`).
-4. Detects duplicates and updated versions.
-5. Provides a simple UI to inspect the extracted metadata and text quality.
+## Yêu cầu
 
-## Requirements
+### 1. Tiếp nhận (Ingestion)
 
-### 1. Ingestion
-
-Implement an ingestion command (or API) that reads `data/feed.json`, loads each raw legal
-text file from `data/raw/`, and saves the result into a database. A starting entry point is
-provided at [`ingest.py`](ingest.py):
+Viết một lệnh (hoặc API) đọc `data/feed.json`, nạp từng tệp văn bản thô trong `data/raw/`
+và lưu kết quả vào cơ sở dữ liệu. Điểm khởi đầu có sẵn tại [`ingest.py`](ingest.py):
 
 ```bash
 python ingest.py data/feed.json
 ```
 
-For each document, store at least: raw text, normalized text, source URL, content hash, and
-an **ingestion status** of `new`, `duplicate`, `updated`, or `failed`.
+Với mỗi văn bản, lưu tối thiểu: văn bản thô, văn bản đã chuẩn hóa, source URL, mã băm nội
+dung (content hash), và **trạng thái tiếp nhận**: `new`, `duplicate`, `updated`, hoặc `failed`.
 
-The ingestion must be **idempotent**: running the same input twice must not create duplicate
-documents. Suggested logic:
+Quá trình tiếp nhận phải **idempotent**: chạy lại cùng dữ liệu đầu vào không được tạo ra
+văn bản trùng. Gợi ý logic:
 
 ```
-same document_number + same content_hash       -> duplicate
-same document_number + different content_hash   -> updated version
-new document_number                             -> new document
+cùng document_number + cùng content_hash        -> duplicate (trùng lặp)
+cùng document_number + khác content_hash         -> updated (phiên bản cập nhật)
+document_number mới                               -> new (văn bản mới)
 ```
 
-### 2. Metadata extraction
+### 2. Trích xuất metadata
 
-Extract at least: `title`, `document_number`, `document_type`, `issuing_authority`,
-`issue_date`, `effective_date`, and `status` if available. If a field cannot be extracted,
-store `null` and record a **warning** instead of failing silently.
+Trích xuất tối thiểu: `title`, `document_number`, `document_type`, `issuing_authority`,
+`issue_date`, `effective_date`, và `status` nếu có. Nếu không trích xuất được một trường,
+lưu `null` và ghi lại một **cảnh báo** thay vì lỗi âm thầm.
 
-### 3. Legal structure parsing
+### 3. Phân tích cấu trúc pháp lý
 
-Parse the document into legal structure and store it as JSON.
+Phân tích văn bản thành cấu trúc pháp lý và lưu dưới dạng JSON.
 
-- **Minimum:** `Điều`, `Khoản`
-- **Bonus:** `Chương`, `Mục`, `Điểm`
+- **Tối thiểu:** `Điều`, `Khoản`
+- **Nâng cao (bonus):** `Chương`, `Mục`, `Điểm`
 
-This matters for legal RAG: chunking by arbitrary token windows is poor; legal text should be
-chunked around meaningful units (article, clause, point).
+Điều này quan trọng với RAG pháp lý: chia theo cửa sổ token cố định thường kém; văn bản
+pháp luật nên được chia theo đơn vị có ý nghĩa (điều, khoản, điểm).
 
-### 4. Quality issues
+### 4. Vấn đề chất lượng (QA)
 
-Record warnings for problems such as: missing document number, missing effective date,
-duplicate document, failed structure parsing, or a possible amended/replaced document that was
-detected but not linked.
+Ghi cảnh báo cho các vấn đề như: thiếu số hiệu văn bản, thiếu ngày hiệu lực, văn bản trùng,
+phân tích cấu trúc thất bại, hoặc phát hiện văn bản có dấu hiệu sửa đổi / thay thế nhưng
+chưa liên kết được.
 
-### 5. UI
+### 5. Giao diện (UI)
 
-Build a simple inspection UI with:
+Xây dựng giao diện kiểm tra đơn giản gồm:
 
-- an **ingestion-run list** (when, totals, new/updated/duplicate/failed counts, warnings),
-- a **document list** (title, number, type, authority, dates, status, ingestion status) with
-  basic filtering,
-- a **document detail page** showing extracted metadata, raw vs normalized text, the parsed
-  legal-structure tree, warnings, related documents, and — if implemented — a RAG-chunk preview.
+- **Danh sách lần tiếp nhận** (thời gian, tổng số, số lượng new/updated/duplicate/failed, cảnh báo),
+- **Danh sách văn bản** (tiêu đề, số hiệu, loại, cơ quan, ngày ban hành/hiệu lực, trạng thái,
+  trạng thái tiếp nhận) kèm bộ lọc cơ bản,
+- **Trang chi tiết văn bản** hiển thị metadata, văn bản thô so với văn bản đã chuẩn hóa, cây
+  cấu trúc pháp lý, cảnh báo, văn bản liên quan, và — nếu có làm — bản xem trước chunk cho RAG.
 
-The point of the UI is **inspectability**, not beauty: can a reviewer quickly tell whether the
-pipeline extracted the law correctly?
+Mục đích của UI là **khả năng kiểm tra**, không phải vẻ đẹp: người rà soát có nhanh chóng
+nhận ra pipeline trích xuất văn bản đúng hay không?
 
 ### 6. README
 
-In your submission, explain how to install dependencies, run any DB migration, run ingestion,
-start the UI, and the reasoning behind your schema and design choices.
+Trong bài nộp, giải thích cách cài đặt phụ thuộc, chạy migration (nếu có), chạy ingestion,
+khởi động UI, và lý do đằng sau thiết kế schema cũng như các lựa chọn của bạn.
 
-## Heads-up about the data
+## Lưu ý về dữ liệu
 
-The corpus in `data/` is intentionally tricky. It contains, among other things: a clean
-well-structured law, duplicates, a law that amends an earlier one, a re-issued document, a
-document missing a field, and a badly formatted file. Your pipeline should handle all of them
-gracefully — **one bad document must not break the whole run.** See
-[`data/README.md`](data/README.md) for the feed format.
+Bộ dữ liệu trong `data/` cố tình có nhiều tình huống khó. Nó bao gồm, trong số đó: một văn
+bản luật sạch và có cấu trúc rõ ràng, văn bản trùng lặp, một luật sửa đổi luật trước đó, một
+văn bản được ban hành lại, một văn bản thiếu trường thông tin, và một tệp định dạng lộn xộn.
+Pipeline của bạn phải xử lý tất cả một cách an toàn — **một văn bản lỗi không được làm hỏng
+cả lần chạy.** Xem [`data/README.md`](data/README.md) để biết định dạng feed.
 
-## Bonus
+## Phần nâng cao (Bonus)
 
-- Extract related documents from phrases like `sửa đổi, bổ sung`, `thay thế`, `hướng dẫn`.
-- Generate RAG-ready chunks per legal unit (article/clause), with metadata attached.
-- Add search by title, document number, and article text.
-- Add basic tests for metadata extraction and duplicate detection (a `tests/` folder is set up).
+- Trích xuất văn bản liên quan từ các cụm như `sửa đổi, bổ sung`, `thay thế`, `hướng dẫn`.
+- Sinh chunk sẵn sàng cho RAG theo đơn vị pháp lý (điều/khoản), kèm metadata.
+- Thêm tìm kiếm theo tiêu đề, số hiệu văn bản và nội dung điều.
+- Thêm test cơ bản cho trích xuất metadata và phát hiện trùng lặp (thư mục `tests/` đã được tạo sẵn).
 
-## Suggested stack (not required)
+## Gợi ý công nghệ (không bắt buộc)
 
-The repo is set up as a Python project, so a natural choice is **Python + SQLite + a simple UI**
-(e.g. Streamlit or Flask). You are free to use another language, database, or framework — if you
-do, just keep `data/` as the input and explain your setup in your README. Dependency suggestions
-are listed (commented) in [`pyproject.toml`](pyproject.toml).
+Repo được thiết lập sẵn dưới dạng dự án Python, nên lựa chọn tự nhiên là **Python + SQLite +
+một UI đơn giản** (ví dụ Streamlit hoặc Flask). Bạn được tự do dùng ngôn ngữ, cơ sở dữ liệu
+hoặc framework khác — nếu vậy, hãy giữ `data/` làm đầu vào và giải thích cách chạy trong
+README của bạn. Gợi ý phụ thuộc được liệt kê (dạng comment) trong [`pyproject.toml`](pyproject.toml).
 
-## Getting started
+## Bắt đầu
 
 ```bash
-# 1. (suggested) create an environment and install deps you choose
-uv sync                 # or: python -m venv .venv && pip install ...
+# 1. (gợi ý) tạo môi trường và cài đặt phụ thuộc bạn chọn
+uv sync                 # hoặc: python -m venv .venv && pip install ...
 
-# 2. run the ingestion entry point against the feed
+# 2. chạy điểm khởi đầu ingestion với feed
 python ingest.py data/feed.json
 
-# 3. build out the pipeline, database, and UI from here
+# 3. xây dựng pipeline, cơ sở dữ liệu và UI từ đây
 ```
 
-## What we value
+## Tiêu chí đánh giá
 
-We care more about **clean data modeling, repeatable ingestion, and legal-document
-understanding** than UI polish. Show your thinking in your schema, your handling of messy/missing
-data, and your README. Scope this as roughly a **1–2 day** take-home.
+Chúng tôi coi trọng **mô hình hóa dữ liệu sạch sẽ, pipeline tiếp nhận chạy lại được, và khả
+năng hiểu văn bản pháp luật** hơn là độ trau chuốt của UI. Hãy thể hiện tư duy của bạn qua
+schema, cách xử lý dữ liệu lộn xộn / thiếu, và README. Phạm vi bài làm khoảng **1–2 ngày**.
